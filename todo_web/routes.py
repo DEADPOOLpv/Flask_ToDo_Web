@@ -59,6 +59,10 @@ def add():
     new_task.owner = current_user.id
     db.session.add(new_task)
     db.session.commit()
+    tasks = ToDo.query.order_by(ToDo.id).all()
+    for index, task in enumerate(tasks, start=1):
+        task.id = index
+    db.session.commit()
     return redirect(url_for("todo"))
 
 @app.route('/update/<int:todo_id>')
@@ -73,6 +77,10 @@ def update(todo_id):
 def delete(todo_id):
     todo= ToDo.query.get(todo_id)
     db.session.delete(todo)
+    db.session.commit()
+    tasks = ToDo.query.order_by(ToDo.id).all()
+    for index, task in enumerate(tasks, start=1):
+        task.id = index
     db.session.commit()
     return redirect(url_for("todo"))
 

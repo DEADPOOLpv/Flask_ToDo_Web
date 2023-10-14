@@ -9,13 +9,16 @@
     <form  action="/add" method="post">
         <div >
             <label class="thick">Enter the task</label>
+            <br>
             <input type="text" name="name">
         </div>
         <br>
         <div>
             <label class="thick">Description</label>
-            <textarea name="description" cols="50" rows="4"></textarea>
+            <br>
+            <textarea name="description" cols="60" rows="2"></textarea>
         </div>
+        <br>
         <button class="button1" type="submit" >Add</button>
         </div>
     </form>
@@ -24,7 +27,6 @@
      <tbody>
     {% for todo in todo_list %}
     <tr>
-        <td class="thick">{{todo.task_id }}</td>
         <td class="thick">{{ todo.name }}</td>
         <td class="thick">{{todo.description}}</td>
         {% if todo.done == False %}
@@ -32,8 +34,8 @@
         {% else %}
         <td><label class="label done">Done</label></td>
         {% endif %}
-        <td><a  href="/update/{{ todo.task_id }}" class="button2">Update</a></td>
-        <td><a  href="/delete/{{ todo.task_id }}" class="button3">Delete</a></td>
+        <td><a  href="{{ url_for('update', todo_id=todo.id) }}" class="button2">Update</a></td>
+        <td><a  href="{{ url_for('delete', todo_id=todo.id) }}" class="button3">Delete</a></td>
     </tr>
     {% endfor %}
 </tbody>

@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
 
 class ToDo(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(length=30), nullable=False, unique=True)
-    description = db.Column(db.String(length=1024), nullable=False, unique=True)
+    name = db.Column(db.String(length=30), nullable=False)
+    description = db.Column(db.String(length=1024))
     done=db.Column(db.Boolean)
     owner = db.Column(db.String(), db.ForeignKey('user.id'))
