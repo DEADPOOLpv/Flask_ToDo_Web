@@ -27,8 +27,9 @@
      <tbody>
     {% for todo in todo_list %}
     <tr>
+        <td class="thick">{{ todo.id }}</td>
         <td class="thick">{{ todo.name }}</td>
-        <td class="thick">{{todo.description}}</td>
+        <td class="thick">{{ todo.description }}</td>
         {% if todo.done == False %}
         <td><label class="label pending">Not done</label></td>
         {% else %}
