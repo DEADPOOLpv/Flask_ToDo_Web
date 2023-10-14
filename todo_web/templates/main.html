@@ -24,16 +24,16 @@
      <tbody>
     {% for todo in todo_list %}
     <tr>
-        <td class="thick">{{todo.task_id }}</td>
+        <td class="thick">{{ todo.id }}</td>
         <td class="thick">{{ todo.name }}</td>
-        <td class="thick">{{todo.description}}</td>
+        <td class="thick">{{ todo.description }}</td>
         {% if todo.done == False %}
         <td><label class="label pending">Not done</label></td>
         {% else %}
         <td><label class="label done">Done</label></td>
         {% endif %}
-        <td><a  href="/update/{{ todo.task_id }}" class="button2">Update</a></td>
-        <td><a  href="/delete/{{ todo.task_id }}" class="button3">Delete</a></td>
+        <td><a  href="{{ url_for('update', todo_id=todo.id) }}" class="button2">Update</a></td>
+        <td><a  href="{{ url_for('delete', todo_id=todo.id) }}" class="button3">Delete</a></td>
     </tr>
     {% endfor %}
 </tbody>
