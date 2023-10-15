@@ -17,6 +17,7 @@ class ToDo(db.Model):
     name = db.Column(db.String(length=30), nullable=False)
     description = db.Column(db.String(length=1024))
     done=db.Column(db.Boolean)
+    deadline = db.Column(db.DateTime)
     owner = db.Column(db.String(), db.ForeignKey('user.id'))
     
     

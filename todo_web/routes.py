@@ -4,6 +4,7 @@ from todo_web.models import ToDo, User
 from todo_web.forms import RegisterForm, LoginForm
 from todo_web import db
 from flask_login import login_user, logout_user, login_required, current_user
+from datetime import datetime, timedelta
 
 @app.route('/')
 @app.route('/home')
@@ -48,14 +49,21 @@ def login_page():
 @login_required
 def todo():
     owner_id = current_user.id
-    todo_list=ToDo.query.filter_by(owner=owner_id).all()
-    return render_template('main.html',todo_list=todo_list)
+    current_datetime = datetime.now()
+    owner_id = current_user.id
+    todo_list = ToDo.query.filter_by(owner=owner_id).all()
+    return render_template('main.html', todo_list=todo_list, current_datetime=current_datetime, timedelta=timedelta)
 
 @app.route('/add',methods=['POST'])
 def add():
     name = request.form.get("name")
     description = request.form.get("description")
-    new_task=ToDo(name=name,done=False, description=description)
+    deadline_str = request.form.get('deadline')
+    if deadline_str:
+        deadline = datetime.fromisoformat(deadline_str)
+    else:
+        deadline = None
+    new_task=ToDo(name=name,done=False, description=description, deadline=deadline)
     new_task.owner = current_user.id
     db.session.add(new_task)
     db.session.commit()
