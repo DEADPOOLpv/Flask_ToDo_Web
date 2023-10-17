@@ -31,3 +31,4 @@ class ToDo(db.Model):
     done=db.Column(db.Boolean)
     deadline = db.Column(db.DateTime)
     owner = db.Column(db.String(), db.ForeignKey('user.id'))
+    

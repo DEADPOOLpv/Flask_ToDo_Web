@@ -1,10 +1,11 @@
-from todo_web import app
+from todo_web import app, mail
 from flask import render_template, redirect, url_for, flash, request
 from todo_web.models import ToDo, User
 from todo_web.forms import RegisterForm, LoginForm
 from todo_web import db
 from flask_login import login_user, logout_user, login_required, current_user
 from datetime import datetime, timedelta
+from flask_mail import Message
 
 @app.route('/')
 @app.route('/home')
@@ -52,7 +53,18 @@ def todo():
     current_datetime = datetime.now()
     owner_id = current_user.id
     todo_list = ToDo.query.filter_by(owner=owner_id).all()
+    for todo in todo_list:
+            if todo.deadline:
+                if todo.deadline < current_datetime:
+                    send_email_notification(current_user.email_address, f'Deadline Passed for Task: {todo.name}')
+                elif todo.deadline < current_datetime + timedelta(hours=1):
+                    send_email_notification(current_user.email_address, f'Deadline Approaching for Task: {todo.name}')    
     return render_template('main.html', todo_list=todo_list, current_datetime=current_datetime, timedelta=timedelta)
+
+def send_email_notification(to_email, message):
+    msg = Message('Task Notification', recipients=[to_email])
+    msg.html = render_template('email_notification.html', message=message)
+    mail.send(msg)
 
 @app.route('/add',methods=['POST'])
 def add():

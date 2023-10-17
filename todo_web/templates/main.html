@@ -4,11 +4,11 @@
 {% endblock %}
 
 {% block content %}
-<div id="first" >
+<div id="first" style="background-color: #333;" >
     <h1>To Do List</h1>
     <form  action="/add" method="post">
         <br>
-        <div >
+        <div>
             <label class="thick">Enter the task</label>
             <br>
             <input type="text" name="name">
@@ -24,17 +24,17 @@
             <input type="datetime-local" name="deadline">
         </div>
         <br>
-        <button class="button1" type="submit" >Add</button>
-        </div>
+        <button class="button1" type="submit">Add</button>
+</div>
     </form>
     <br><br>
- <table>
-     <tbody>
+<table>
+    <tbody>
     {% for todo in todo_list %}
     <tr>
-        <td class="thick">{{ todo.name }}</td>
-        <td class="thick">{{ todo.description }}</td>
-        <td>{{ todo.deadline }}</td>
+        <td style="background-color: #444;" class="thick">{{ todo.name }}</td>
+        <td style="background-color: #444;" class="thick">{{ todo.description }}</td>
+        <td style="background-color: #444;" class="thick">{{ todo.deadline }}</td>
         <td> 
             <span class="warning">
                 {% if todo.deadline %}
@@ -47,9 +47,9 @@
             </span>
         </td>
         {% if todo.done == False %}
-        <td><label class="label pending">Not done</label></td>
+        <td><label class="curved-label pending">Not done</label></td>
         {% else %}
-        <td><label class="label done">Done</label></td>
+        <td><label class="curved-label done">Done</label></td>
         {% endif %}
         <td><a  href="{{ url_for('update', todo_id=todo.id) }}" class="button2">Update</a></td>
         <td><a  href="{{ url_for('delete', todo_id=todo.id) }}" class="button3">Delete</a></td>
