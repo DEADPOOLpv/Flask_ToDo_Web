@@ -17,7 +17,8 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_USERNAME'] = 'deadpoolprathitvisen@gmail.com'
-app.config['MAIL_PASSWORD'] = 'Prathit0807'
+app.config['MAIL_PASSWORD'] = 'rrsu tzac mbbt cjdt'
+app.config['MAIL_DEFAULT_SENDER'] = 'deadpoolprathitvisen@gmail.com'
 mail = Mail(app)
 
 from todo_web import routes
