@@ -1,6 +1,14 @@
 from todo_web import db, login_manager
 from todo_web import bcrypt
 from flask_login import UserMixin
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+engine = create_engine('postgresql://postgres:root@localhost/todo_db')
+
+Session = sessionmaker(bind=engine)
+Base = declarative_base()
 
 @login_manager.user_loader
 def load_user(user_id):
