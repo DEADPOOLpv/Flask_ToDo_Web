@@ -1,6 +1,6 @@
 from todo_web import app, mail
 from flask import render_template, redirect, url_for, flash, request
-from todo_web.models import ToDo, User
+from todo_web.models import Todo, User
 from todo_web.forms import RegisterForm, LoginForm
 from todo_web import db
 from flask_login import login_user, logout_user, login_required, current_user
@@ -52,7 +52,7 @@ def todo():
     owner_id = current_user.id
     current_datetime = datetime.now()
     owner_id = current_user.id
-    todo_list = ToDo.query.filter_by(owner=owner_id).all()
+    todo_list = Todo.query.filter_by(owner=owner_id).all()
     for todo in todo_list:
             if todo.deadline:
                 if todo.deadline < current_datetime:
@@ -75,11 +75,11 @@ def add():
         deadline = datetime.fromisoformat(deadline_str)
     else:
         deadline = None
-    new_task=ToDo(name=name,done=False, description=description, deadline=deadline)
+    new_task=Todo(name=name,done=False, description=description, deadline=deadline)
     new_task.owner = current_user.id
     db.session.add(new_task)
     db.session.commit()
-    tasks = ToDo.query.order_by(ToDo.id).all()
+    tasks = Todo.query.order_by(Todo.id).all()
     for index, task in enumerate(tasks, start=1):
         task.id = index
     db.session.commit()
@@ -87,7 +87,7 @@ def add():
 
 @app.route('/update/<int:todo_id>')
 def update(todo_id):
-    todo= ToDo.query.get(todo_id)
+    todo= Todo.query.get(todo_id)
     todo.done=not todo.done
     db.session.commit()
     return redirect(url_for("todo"))
@@ -95,10 +95,10 @@ def update(todo_id):
 
 @app.route('/delete/<int:todo_id>')
 def delete(todo_id):
-    todo= ToDo.query.get(todo_id)
+    todo= Todo.query.get(todo_id)
     db.session.delete(todo)
     db.session.commit()
-    tasks = ToDo.query.order_by(ToDo.id).all()
+    tasks = Todo.query.order_by(Todo.id).all()
     for index, task in enumerate(tasks, start=1):
         task.id = index
     db.session.commit()
